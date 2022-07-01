@@ -291,10 +291,11 @@ db_type = "SingleObjectTable"
 # 2.5 WHAT ARE THE NAMES OF THE OBJECTS YOU MEASURED
 ###################################
 # ie. what are the names of the objects that will be in the columns/table names of your database
+# currently supports up to three objects identified in the pipeline
 
-object1 = 'FilterNuclei1' # primary nuclear object
-object2 = 'IdentifyNG2'   # secondary object based on nucleus
-object3 = 'IdentifyYFP'   # secondary object based on nucleus
+object1 = 'Object1'   # primary nuclear object e.g. 'IdentifyNuclei'
+object2 = 'Object2'   # secondary object 1
+object3 = 'Object3'   # secondary object 2
 
 #################################################################################
 ############################# (3) Quality Control ###############################
