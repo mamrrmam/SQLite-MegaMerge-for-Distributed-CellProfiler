@@ -9,7 +9,7 @@
 #                 for use with Distributed CellProfiler output and should       #
 #                 itself output a single database that can be used in           #
 #                 CellProfiler Analyst.                                         #
-# @date           July 1st, 2022                                                #                                               #
+# @date           July 1st, 2022                                                #
 #                                                                               #
 #################################################################################
 
