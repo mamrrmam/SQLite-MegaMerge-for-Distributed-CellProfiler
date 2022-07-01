@@ -801,7 +801,7 @@ print("All databases finished merging. Time elapsed: %.3f" % (time.time() -
                                                           startTime))
 
 
-# 6.1 Defragment Merged Database
+# 6.1 Run Post Processing Module
 #### Run post-processing script to reintroduce column constraints for CPA
 #### 
 
