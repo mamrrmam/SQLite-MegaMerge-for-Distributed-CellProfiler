@@ -1,7 +1,0 @@
-The code in SQLite-MegaMerge-for_Distributed-CellProfiler (MegaMergeScript.py) was written by Mack Michell-Robinson (author), first uploaded July 1, 2022. The underlying basis of the merge code (see: SQLite-Mega-Merge at https://github.com/mamrrmam/SQLite-Mega-Merge) was developed by @gopherchucks (contributor). See original mergeScript.py by @gopherchucks at https://github.com/gopherchucks/Database-Merging-SQLite3.
-
-The use of the code is limited by the licenses governing the underlying softwares (Python, SQLite3, CellProfiler, etc.). The author has no legal ownership or rights to the underlying softwares beyond what is governed by their respective licenses.
-
-Use of the code does not imply any liability on the part of authors or contributors, and no guarantee or warranty is offered covering its use (README.md).
-
-If the code is reused for commercial or non-commercial purposes (e.g. academic publishing), please list all authors and contributors in any relevant acknowledgements.
