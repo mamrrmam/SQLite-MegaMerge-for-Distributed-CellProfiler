@@ -32,9 +32,9 @@ listDB = []  # Variable to store the names of the databases
 listTable = []  # Variable to store table names
 
 #################################################################################
-############################## Define Functions #################################
+############################## (1) Define Functions #############################
 
-# 1. Attach a database to the currently connected database
+# 1.1 Attach a database to the currently connected database
 #
 # @param db_name the name of the database file (i.e. "example.db")
 # @return none
@@ -51,7 +51,7 @@ def attach_database(db_name, u, n):
     except Exception():
         traceback.exc()
 
-# 2. Close the current database connection
+# 1.2 Close the current database connection
 #
 # @return none
 
@@ -59,7 +59,7 @@ def close_connection():
     curs.close()
     conn.close()
 
-# 3. Get the table names of a database
+# 1.3 Get the table names of a database
 #
 # @param db_name the name of the database file (i.e. "example.db")
 # @return a string array of the table names
@@ -82,7 +82,7 @@ def get_table_names():
             tables.append(temp[i][0])
     return tables
 
-# 4. Get the column names of a table
+# 1.4 Get the column names of a table
 #
 # @param table_name the name of the database file (i.e. "example.db")
 # @return a string array of the column names - strips primary ids column
@@ -95,7 +95,7 @@ def get_column_names(table_name):
         columns.append(temp[i][1])
     return columns
 
-# 5. Compare two lists to see if they have identical data
+# 1.5 Compare two lists to see if they have identical data
 #
 # @param list1 the first list parameter for comparison
 # @param list2 the second list parameter for comparison
@@ -110,7 +110,7 @@ def compare_lists(list1, list2):
                 return 0
     return 1
 
-# 6. Convert a list of string objects to a string of comma separated items.
+# 1.6 Convert a list of string objects to a string of comma separated items.
 #
 # @param listObj the list to convert
 # @return a string containing the list items - separated by commas.
@@ -135,7 +135,7 @@ def list_to_string(list_obj, dim):
     return list_string
 
 
-# 7. Merge a table from an attached database to the source table
+# 1.7 Merge a table from an attached database to the source table
 #
 # @param table_name the name of the table to merge
 # @param column_names the names of the columns to include in the merge
@@ -151,7 +151,7 @@ def merge_table(table_name, column_names, db_name):
         traceback.print_exc()
 
 
-# 8. Divide otherDBs into blocks of ten or less because sqlite can't attach more than ten at a time
+# 1.8 Divide otherDBs into blocks of ten or less because sqlite can't attach more than ten at a time
 #
 # @param list (ie. otherDBs)
 # @param n (the size of the block, in our case 10)
@@ -160,7 +160,7 @@ def divide_list(list, n):
     for i in range(0, len(list), n):
         yield list[i:i +n]
 
-# 9. Get the column types of a table
+# 1.9 Get the column types of a table
 #
 # @param table_name the name of the table (i.e. "example.db") 
 # format: [colname1 coltype1, colname2 coltype2, ...]
@@ -174,7 +174,7 @@ def get_column_names_types(table_name):
         column_names_types.append([temp[i][1], temp[i][2]])
     return column_names_types
 
-# 10. Iteratively search thru a nested list to replace a value, for lists with up to three levels 
+# 1.10 Iteratively search thru a nested list to replace a value, for lists with up to three levels 
 #
 # @param list is the list to search
 # @param search_key is the value to replace in the list
@@ -222,7 +222,7 @@ def list_find_replace(list, search_key, replacement):
         return list
 
 
-# 11. Return a list of tuples (output from fetch methods when using SELECT statements in curs.execute
+# 1.11 Return a list of tuples (output from fetch methods when using SELECT statements in curs.execute
 #         and fetchall, fetchmany, etc.
 #         @fetchall is the named variable that the fetchall() is stored in
 #         @col_index is the column index in the database - because fetchall() and fetchmany() return
@@ -239,12 +239,12 @@ def fetch_to_list(fetch, col_index=0):
         newlist.append(temp)
     return newlist
 
-# 12. Rename a column in a table
+# 1.12 Rename a column in a table
 
 def rename_column(table, old_name, new_name):
     curs.execute(f"ALTER TABLE {table} RENAME COLUMN {old_name} TO {new_name};")
 
-# 13. Swap the names of two columns in the same table
+# 1.13 Swap the names of two columns in the same table
 
 def swap_column_names(table, col1, col2):
     col1_ = col1 + "_"
@@ -256,9 +256,9 @@ def swap_column_names(table, col1, col2):
 
 
 #################################################################################
-############################## Input Parameters #################################
+############################## (2) Input Parameters #############################
 
-# 1. DEFINE A LIST OF DBs TO MERGE
+# 2.1 DEFINE A LIST OF DBs TO MERGE
 ##################################
 # define a list of DBs using filenames from the folder containing databases by running ls /home/ubuntu/databases/*.db > filenames.txt
 # ...needs to be full path for sqlite3 to interpret correctly
@@ -269,26 +269,26 @@ with open('filenames.txt', 'r') as fileNames:
     otherDBs = [line.strip() for line in fileNames]
 #otherDBs = ['1-0-0.db', '1-9408-3584.db']
 
-# 2. DEFINE A MAIN DB AS A TEMPLATE FOR THE MERGE
+# 2.2 DEFINE A MAIN DB AS A TEMPLATE FOR THE MERGE
 ###################################
 # This is where the main database is ie. the first if a list of identical DBs but can be defined otherwise
 
 mainDB = otherDBs[0]
 
-# 3. QUALITY CONTROL
+# 2.3 QUALITY CONTROL
 ###################################
 
 if len(otherDBs) == 0:
     print("ERROR: No databases have been added for merging.")
     sys.exit()
 
-#4. WHAT KIND OF DATABASE WAS OUTPUT BY CELLPROFILER
+# 2.4 WHAT KIND OF DATABASE WAS OUTPUT BY CELLPROFILER
 ###################################
 # 'SingleObjectTable' or 'SingleObjectView' are currently supported
 
 db_type = "SingleObjectTable"
 
-#5. WHAT ARE THE NAMES OF THE OBJECTS YOU MEASURED
+# 2.5 WHAT ARE THE NAMES OF THE OBJECTS YOU MEASURED
 ###################################
 # ie. what are the names of the objects that will be in the columns/table names of your database
 
@@ -297,9 +297,9 @@ object2 = 'IdentifyNG2'   # secondary object based on nucleus
 object3 = 'IdentifyYFP'   # secondary object based on nucleus
 
 #################################################################################
-############################# Quality Control ###################################
+############################# (3) Quality Control ###############################
 
-# 1. Initialize Connection and get main list of tables
+# 3.1 Initialize Connection and get main list of tables
 ################################## 
 
 conn = sqlite3.connect(mainDB)  # Connect to the main database
@@ -308,7 +308,7 @@ listTable = get_table_names()  # Get the table names
 listTable.sort()
 close_connection()
 
-# 2. Compare databases for quality control
+# 3.2 Compare databases for quality control
 ##################################
 
 startTime = time.time()
@@ -339,13 +339,13 @@ while i < len(otherDBs):
     num = len(otherDBs)
     print(f"There are {num} databases whose tables matched the main database.")
 
-# 3. Log exceptions that were removed or otherwise not a good fit for merge
+# 3.3 Log exceptions that were removed or otherwise not a good fit for merge
 ################################## 
 
 for y in range(0, len(exc_DBs)):
    print(f"{exc_DBs[y][0]} was logged as an exception. {exc_DBs[y][1]}")
 
-# 4. Log errors when no otherDBs were found
+# 3.4 Log errors when no otherDBs were found
 ################################## 
 
 if len(otherDBs) == 0:
@@ -353,34 +353,36 @@ if len(otherDBs) == 0:
           inconsistencies, or databases were not added properly.")
     sys.exit()
 
-# 5. Print notification that quality control is complete
+# 3.5 Print notification that quality control is complete
 ##################################
 
 print("Finished comparing databases. Time elapsed: %.3f" % (time.time() -
                                                             startTime))
 
 #################################################################################
-############################ Merging Databases ##################################
+############################ (4) Pre-Processing #################################
 
-# 1. Initialization Parameters
+# 4.1 Initialization Parameters
 ##################################
 
+## initialize timer
 startTime = time.time()
-print("Initializing merging of databases. Started at: " + strftime("%H:%M", gmtime()))
-
-# 2. Pre-processing module produces a donor table based on the template of the original
-##################################
-## (1): A loop that deals with SingleObjectView CP Output
-## (2): A loop that checks the number of objects for an image to determine if there
-#            are >10000 objects per image. Another loop that adds GroupNumber to the table 
-#            to allow image sub-grouping for tables with more than 1000 objects per image
-## (3): A loop that renumbers ObjectNumbers Per_Object Tables
-## (4): A loop that removes column constraints from tables to facilitate the merge
 
 ## time check
 print("Pre-processing databases initiated at: " + strftime("%H:%M", gmtime()))
 
-# (1) Per_Object Table Creation Loop
+
+# 4.2 Pre-processing module produces a donor table based on the template of the original
+##################################
+## 4.2.1: A loop that deals with SingleObjectView CP Output
+## 4.2.2: A loop that checks the number of objects for an image to determine if there
+#            are >10000 objects per image. Another loop that adds GroupNumber to the table 
+#            to allow image sub-grouping for tables with more than 1000 objects per image
+## 4.3.3: A loop that removes column constraints and renumbers relevant columns in the
+##           Per_Object and Per_Image tables
+
+
+# 4.2.1 Per_Object Table Creation Loop
 #### Scheme - make per object tables in each of the otherDBs using left join
 #### then insert/merge all DBs
 
@@ -471,7 +473,7 @@ elif (db_type == 'SingleObjectTable'):
     no_obj_no = 'Number_Object_Number'
 
 
-# (2) Check Object Numbers
+# 4.2.2 Check Object Numbers
 #### A loop that checks the number of objects for an image to determine if there
 #### are >200 objects per image
 
@@ -592,7 +594,7 @@ close_connection()
 print("Object Grouping Completed. Time elapsed: %.3f" % (time.time() -
                                                          startTime))
 
-# (3) Renumbering Loop
+# 4.2.3 Renumbering Loop
 #### For any columns which require unique values in CP (ImageNumber, ObjectNumber, etc), we can renumber the objects
 #### in the same sequence they will be merged so that the numbering will be continuous after the merge.
 
@@ -743,10 +745,12 @@ for h in range(0, len(otherDBs)):
                                                                               startTime))
 
 
-# 3. Database Merge Module
-##################################
-## A nested for loop iterates through the blocks in this version
-## to prevent an error from trying to attach more than ten DBs at a time
+#################################################################################
+########################## (5) Merging Databases ################################
+
+# 5.1 Initialization Parameters
+####
+####
 
 print("Merging databases initiated at: " + strftime("%H:%M", gmtime()))
 otherDBs.pop(0) # removes the first database (mainDB) from filenames, turn this off if MainDB is not in filenames.txt
@@ -755,24 +759,35 @@ nBlocks = len(DBs_attacher)
 Total_DBs_attacher = int(sum([len(block) for block in DBs_attacher]))
 print("Total: "+str(Total_DBs_attacher)+" Blocks: "+str(nBlocks))
 
-# Merge Loop
+# 5.2 Database Merge Loop
+#### A nested for loop iterates through the blocks in this version
+#### to prevent an error from trying to attach more than ten DBs at a time
 
-for u in range(0, len(DBs_attacher)):                                         # Block level iterator
-    conn = sqlite3.connect(mainDB, timeout = 15)                              # Attach main database
-    curs = conn.cursor()                                                      # Attach cursor
-    listDB.append([])                                                         # Add a new block to listDB
+for u in range(0, len(DBs_attacher)):                                                                  # Block level iterator
+    conn = sqlite3.connect(mainDB, timeout = 15)                                                       # Attach main database
+    curs = conn.cursor()                                                                               # Attach cursor
+    listDB.append([])                                                                                  # Add a new block to listDB
     now = u+1
     print("Now processing: "+str(now)+" of "+str(nBlocks))
-    for n in range(0, len(DBs_attacher[u])):                                  # Sub-Block level iterator, n<=10 
-        attach_database(DBs_attacher[u][n], u, n)                             # Attach databases within block
-        for j in range(0, len(listTable)):                                    # for each table in each database
-            columns = list_to_string(get_column_names(listTable[j]), 1)       # get each column for each table
-            merge_table(listTable[j], columns, listDB[u][n])                  # and insert rows from these columns, in this database, in the equivalent table in main
-            conn.commit()                                                     # Commit changes one last time after a database in the block is done
-        os.remove(f"{DBs_attacher[u][n]}")                                    # Removes merged db after the merge to conserve space on disk
-    close_connection()                                                        # Close connection at end of each block of ten databases
+    for n in range(0, len(DBs_attacher[u])):                                                           # Sub-Block level iterator, n<=10 
+        attach_database(DBs_attacher[u][n], u, n)                                                      # Attach databases within block
+        for j in range(0, len(listTable)):                                                             # for each table in each database
+            columns = list_to_string(get_column_names(listTable[j]), 1)                                # get each column for each table
+            merge_table(listTable[j], columns, listDB[u][n])                                           # and insert rows from these columns, in this database, in the equivalent table in main
+            conn.commit()                                                                              # Commit changes one last time after a database in the block is done
+        os.remove(f"{DBs_attacher[u][n]}")                                                             # Removes merged db after the merge to conserve space on disk
+    close_connection()                                                                                 # Close connection at end of each block of ten databases
     print("Finished merging: "+str(u)+" of"+str(nBlocks)+". Time elapsed: %.3f" % (time.time() -
                                                                                    startTime))
+
+
+
+#################################################################################
+########################## (6) Finalizing Merge #################################
+
+# 6.1 Defragment Merged Database
+#### 
+#### 
 
 try:
     conn = sqlite3.connect(mainDB, timeout = 15)
@@ -785,10 +800,9 @@ except Exception():
 print("All databases finished merging. Time elapsed: %.3f" % (time.time() -
                                                           startTime))
 
-# VACUUM to defragment db
-conn = sqlite3.connect(mainDB, timeout = 15)
-curs = conn.cursor()
-curs.execute("VACUUM;")
 
-# Run post_processing.py
+# 6.1 Defragment Merged Database
+#### Run post-processing script to reintroduce column constraints for CPA
+#### 
+
 os.system("python3 post_processing.py")
