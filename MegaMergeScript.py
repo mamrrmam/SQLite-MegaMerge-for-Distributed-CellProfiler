@@ -1,13 +1,16 @@
 #################################################################################
 # SQLite Mega Merge Script                                                      #
 #                                                                               #
-# @author         Charles Duso "SQLite Merge Script"                            #
+# @author         Mackenzie A Michell-Robinson                                  #
+# @contributor    Charles Duso "SQLite Merge Script"                            #
 # @description    Merges databases that have the same tables and schema.        #
-# @date           August 7th, 2016                                              #
-# @modified by    Mack Robinson                                                 #
-# @modified       April 22, 2021                                                #
-# @mods           Now includes block processing to                              #
-#                 handle large numbers of databases                             #
+#                 Supports merging thousands of databases.                      #
+#                 Includes relevant object number and image number handling     #
+#                 for use with Distributed CellProfiler output and should       #
+#                 itself output a single database that can be used in           #
+#                 CellProfiler Analyst.                                         #
+# @date           July 1st, 2022                                                #                                               #
+#                                                                               #
 #################################################################################
 
 #################################################################################
