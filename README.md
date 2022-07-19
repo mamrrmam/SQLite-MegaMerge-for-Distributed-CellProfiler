@@ -103,8 +103,8 @@ If you're using "SingleObjectView" output, set each object variable to the name 
 # ie. what are the names of the objects that will be in the columns/table names of your database
 
 object1 = 'FilterNuclei1' # primary nuclear object
-object2 = 'IdentifyNG2'   # secondary object based on nucleus
-object3 = 'IdentifyYFP'   # secondary object based on nucleus
+object2 = 'IdentifyGreen'   # secondary object based on nucleus
+object3 = 'IdentifyRed'   # secondary object based on nucleus
 
 ````
 
