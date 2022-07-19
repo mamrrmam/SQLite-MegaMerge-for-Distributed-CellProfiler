@@ -49,7 +49,7 @@ The program will merge the databases in otherDBs into mainDB. The code as-is is 
 DEFINE A MAIN DB AS A TEMPLATE FOR THE MERGE: 
 Leave as-is unless changing how the list of DBs is defined. In that case, set it to whichever database you want all other databases merged into.
 
-***** If for some reason you're no longer working with mainDB as the first item in filenames.txt, make sure to comment out the pop statement at the top of (5) Database Merge Module further down in the script. This statement removes the first database in the list of databases acquired from filenames.txt so that the database will not be merged to itself when using the standard setup. If you've set another DB (not in filenames.txt) as the main DB, this pop statement will cause the script to skip the first database in the list so it will not be merged. See example below.*****
+*If for some reason you're no longer working with mainDB as the first item in filenames.txt, make sure to comment out the pop statement at the top of (5) Database Merge Module further down in the script. This statement removes the first database in the list of databases acquired from filenames.txt so that the database will not be merged to itself when using the standard setup. If you've set another DB (not in filenames.txt) as the main DB, this pop statement will cause the script to skip the first database in the list so it will not be merged. See example below.*
 
 ````
 #################################################################################
