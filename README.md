@@ -44,12 +44,12 @@ mainDB = otherDBs[0]
 ````
 
 DEFINE A LIST OF DBs TO MERGE:
-The program will merge the databases in otherDBs into mainDB. The code as-is is meant to set the first .db file in filenames.txt as mainDB and merge the others into this file. However, mainDB and otherDBs can be set normally, e.g. otherDBs = [obj1, obj2, ... objn]. If so, you need to comment out the pop statement in #3. Database Merge Module (see above).
+The program will merge the databases in otherDBs into mainDB. The code as-is is meant to set the first .db file in filenames.txt as mainDB and merge the others into this file. However, mainDB and otherDBs can be set normally, e.g. otherDBs = [obj1, obj2, ... objn]. If so, you need to comment out the pop statement in (5) Database Merge Module (*****see below).
 
 DEFINE A MAIN DB AS A TEMPLATE FOR THE MERGE: 
 Leave as-is unless changing how the list of DBs is defined. In that case, set it to whichever database you want all other databases merged into.
 
-***** If for some reason you're no longer working with mainDB as the first item in filenames.txt, make sure to comment out the pop statement at the top of #3. Database Merge Module. See further below in the script.*****
+***** If for some reason you're no longer working with mainDB as the first item in filenames.txt, make sure to comment out the pop statement at the top of (5) Database Merge Module further down in the script. See example below.*****
 
 ````
 #################################################################################
